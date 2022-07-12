@@ -9,6 +9,8 @@
 #include "mesh/PhoneAPI.h"
 #include "mesh/mesh-pb-constants.h"
 #include <NimBLEDevice.h>
+#include "modules/PWMModule.h"
+#include <string.h>
 
 //static BLEService meshBleService = BLEService(BLEUuid(MESH_SERVICE_UUID_16));
 //static BLECharacteristic fromNum = BLECharacteristic(BLEUuid(FROMNUM_UUID_16));
@@ -63,7 +65,19 @@ class ESP32BluetoothToRadioCallback : public NimBLECharacteristicCallbacks {
     virtual void onWrite(NimBLECharacteristic *pCharacteristic) {
         DEBUG_MSG("To Radio onwrite\n");
         auto valueString = pCharacteristic->getValue();
-        
+
+        DEBUG_MSG(&valueString[0]);
+
+        //string = '0';
+        //DEBUG_MSG(&str1[0]);
+
+        //if(strcmp(&valueString[0], "0")  == 0)
+        //{
+        setBottomServoDuty(atoi(&valueString[0]));
+        DEBUG_MSG("Moving Servo \n");
+
+
+
         bluetoothPhoneAPI->handleToRadio(reinterpret_cast<const uint8_t*>(&valueString[0]), pCharacteristic->getDataLength());
     }
 };

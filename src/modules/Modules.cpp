@@ -9,6 +9,7 @@
 #include "modules/ExternalNotificationModule.h"
 #include "modules/NodeInfoModule.h"
 #include "modules/PositionModule.h"
+#include "modules/PWMModule.h"
 #include "modules/RemoteHardwareModule.h"
 #include "modules/ReplyModule.h"
 #include "modules/RoutingModule.h"
@@ -33,10 +34,9 @@ void setupModules()
     nodeInfoModule = new NodeInfoModule();
     positionModule = new PositionModule();
     textMessageModule = new TextMessageModule();
-    
     // Note: if the rest of meshtastic doesn't need to explicitly use your module, you do not need to assign the instance
     // to a global variable.
-
+    new PWMModule();
     new RemoteHardwareModule();
     new ReplyModule();
     rotaryEncoderInterruptImpl1 = new RotaryEncoderInterruptImpl1();
